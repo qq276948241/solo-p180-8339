@@ -16,7 +16,7 @@ export function useFrequentSeats() {
   async function refresh() {
     const user = updateUserState();
 
-    if (!user) {
+    if (!user || isAdmin.value) {
       frequentSeatIds.value = new Set();
       return;
     }

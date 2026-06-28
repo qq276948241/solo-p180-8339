@@ -112,6 +112,10 @@ router.get('/all', authMiddleware, adminMiddleware, (req, res) => {
 });
 
 router.get('/frequent-seats', authMiddleware, (req, res) => {
+  if (req.user.role === 'admin') {
+    return res.json({ success: true, data: [] });
+  }
+
   const bookings = readJSON('bookings.json', []);
   const userBookings = bookings.filter(b => b.userId === req.user.id);
 
