@@ -1,0 +1,11 @@
+[
+  {
+    "id": "fe6c36ae-4b23-45bd-97d0-abd3e93e918a",
+    "userId": "user1",
+    "seatId": "A2",
+    "date": "2026-06-28",
+    "timeSlotId": "morning",
+    "status": "active",
+    "createdAt": "2026-06-28T14:34:51.859Z"
+  }
+]

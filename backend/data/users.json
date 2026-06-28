@@ -1,0 +1,6 @@
+[
+  { "id": "user1", "username": "admin", "password": "admin123", "name": "管理员", "role": "admin" },
+  { "id": "user2", "username": "zhangsan", "password": "123456", "name": "张三", "role": "user" },
+  { "id": "user3", "username": "lisi", "password": "123456", "name": "李四", "role": "user" },
+  { "id": "user4", "username": "wangwu", "password": "123456", "name": "王五", "role": "user" }
+]

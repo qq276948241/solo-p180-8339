@@ -1,0 +1,24 @@
+{
+  "zones": [
+    { "id": "silent", "name": "静音区", "color": "#E3F2FD", "textColor": "#1565C0" },
+    { "id": "discussion", "name": "讨论区", "color": "#FFF3E0", "textColor": "#E65100" }
+  ],
+  "seats": [
+    { "id": "A1", "zone": "silent", "x": 1, "y": 1, "label": "A1" },
+    { "id": "A2", "zone": "silent", "x": 2, "y": 1, "label": "A2" },
+    { "id": "A3", "zone": "silent", "x": 3, "y": 1, "label": "A3" },
+    { "id": "A4", "zone": "silent", "x": 4, "y": 1, "label": "A4" },
+    { "id": "B1", "zone": "silent", "x": 1, "y": 2, "label": "B1" },
+    { "id": "B2", "zone": "silent", "x": 2, "y": 2, "label": "B2" },
+    { "id": "C1", "zone": "discussion", "x": 1, "y": 4, "label": "C1" },
+    { "id": "C2", "zone": "discussion", "x": 2, "y": 4, "label": "C2" },
+    { "id": "C3", "zone": "discussion", "x": 3, "y": 4, "label": "C3" },
+    { "id": "D1", "zone": "discussion", "x": 1, "y": 5, "label": "D1" },
+    { "id": "D2", "zone": "discussion", "x": 2, "y": 5, "label": "D2" }
+  ],
+  "timeSlots": [
+    { "id": "morning", "label": "上午", "start": "08:00", "end": "12:00" },
+    { "id": "afternoon", "label": "下午", "start": "13:00", "end": "17:00" },
+    { "id": "evening", "label": "晚上", "start": "18:00", "end": "22:00" }
+  ]
+}

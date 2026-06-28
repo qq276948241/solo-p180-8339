@@ -1,0 +1,13 @@
+{
+  "name": "study-room-booking-system",
+  "version": "1.0.0",
+  "description": "自习室座位预约系统 - Vue 3 + Node.js",
+  "private": true,
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm start",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "start": "cd backend && npm start"
+  }
+}
