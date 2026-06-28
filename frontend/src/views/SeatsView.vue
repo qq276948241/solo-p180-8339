@@ -120,6 +120,9 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { seatsApi, bookingsApi, getUser } from '../api';
+import { useFrequentSeats } from '../composables/useFrequentSeats';
+
+const { frequentSeatIds, isAdmin, refresh: refreshFrequent, isFrequent } = useFrequentSeats();
 
 const loading = ref(true);
 const submitting = ref(false);
@@ -130,7 +133,6 @@ const availability = ref({});
 const selectedDate = ref(getToday());
 const selectedSlot = ref('');
 const selectedSeat = ref(null);
-const frequentSeatIds = ref(new Set());
 
 function getToday() {
   const d = new Date();
@@ -164,7 +166,7 @@ function isMyBooking(seatId) {
 }
 
 function isFrequentSeat(seatId) {
-  return frequentSeatIds.value.has(seatId);
+  return isFrequent(seatId);
 }
 
 function getSeatStatusClass(seatId) {
@@ -230,16 +232,6 @@ function getSelectedSeatZone() {
   return zone ? zone.name : '';
 }
 
-async function loadFrequentSeats() {
-  try {
-    const res = await bookingsApi.frequentSeats();
-    if (res.success) {
-      frequentSeatIds.value = new Set(res.data.map(item => item.seatId));
-    }
-  } catch (e) {
-  }
-}
-
 async function loadAvailability() {
   if (!selectedDate.value) return;
   try {
@@ -271,7 +263,7 @@ async function submitBooking() {
       success.value = '预约成功！';
       selectedSeat.value = null;
       await loadAvailability();
-      await loadFrequentSeats();
+      await refreshFrequent();
     } else {
       error.value = res.message || '预约失败';
     }
@@ -284,6 +276,6 @@ async function submitBooking() {
 }
 
 onMounted(async () => {
-  await Promise.all([loadAvailability(), loadFrequentSeats()]);
+  await Promise.all([loadAvailability(), refreshFrequent()]);
 });
 </script>

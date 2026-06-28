@@ -7,5 +7,14 @@
     "timeSlotId": "morning",
     "status": "active",
     "createdAt": "2026-06-28T14:34:51.859Z"
+  },
+  {
+    "id": "e9b791b1-c6af-45c3-ba68-86e0bb256cd0",
+    "userId": "user2",
+    "seatId": "A1",
+    "date": "2026-06-28",
+    "timeSlotId": "afternoon",
+    "status": "active",
+    "createdAt": "2026-06-28T14:59:23.639Z"
   }
 ]
