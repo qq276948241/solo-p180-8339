@@ -111,6 +111,23 @@ router.get('/all', authMiddleware, adminMiddleware, (req, res) => {
   res.json({ success: true, data: bookings });
 });
 
+router.get('/frequent-seats', authMiddleware, (req, res) => {
+  const bookings = readJSON('bookings.json', []);
+  const userBookings = bookings.filter(b => b.userId === req.user.id);
+
+  const seatCount = {};
+  userBookings.forEach(b => {
+    seatCount[b.seatId] = (seatCount[b.seatId] || 0) + 1;
+  });
+
+  const frequentSeats = Object.entries(seatCount)
+    .filter(([, count]) => count >= 1)
+    .sort((a, b) => b[1] - a[1])
+    .map(([seatId, count]) => ({ seatId, count }));
+
+  res.json({ success: true, data: frequentSeats });
+});
+
 router.post('/:id/cancel', authMiddleware, (req, res) => {
   const { id } = req.params;
   const bookings = readJSON('bookings.json', []);

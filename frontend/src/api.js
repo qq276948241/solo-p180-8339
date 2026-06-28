@@ -100,6 +100,9 @@ export const bookingsApi = {
   },
   cancel(id) {
     return request(`/bookings/${id}/cancel`, { method: 'POST' });
+  },
+  frequentSeats() {
+    return request('/bookings/frequent-seats');
   }
 };
 

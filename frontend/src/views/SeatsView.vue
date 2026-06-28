@@ -78,6 +78,10 @@
             <span>我已预约</span>
           </div>
           <div class="legend-item">
+            <span class="legend-color" style="background: #fff7e6; border-color: #ffd591;"></span>
+            <span>我的常坐位</span>
+          </div>
+          <div class="legend-item">
             <span class="legend-color" style="background: #f4f4f5; border-color: #e9e9eb;"></span>
             <span>已被占用</span>
           </div>
@@ -126,6 +130,7 @@ const availability = ref({});
 const selectedDate = ref(getToday());
 const selectedSlot = ref('');
 const selectedSeat = ref(null);
+const frequentSeatIds = ref(new Set());
 
 function getToday() {
   const d = new Date();
@@ -158,10 +163,15 @@ function isMyBooking(seatId) {
   return !avail.available && avail.bookedBy === getUser()?.id;
 }
 
+function isFrequentSeat(seatId) {
+  return frequentSeatIds.value.has(seatId);
+}
+
 function getSeatStatusClass(seatId) {
   if (selectedSeat.value === seatId) return 'seat-selected';
   if (isMyBooking(seatId)) return 'seat-mine';
   if (!getSeatAvailability(seatId).available) return 'seat-booked';
+  if (isFrequentSeat(seatId)) return 'seat-frequent';
   return 'seat-available';
 }
 
@@ -169,6 +179,7 @@ function getSeatStatusText(seatId) {
   if (isMyBooking(seatId)) return '我的预约';
   if (!getSeatAvailability(seatId).available) return '已占';
   if (selectedSeat.value === seatId) return '已选中';
+  if (isFrequentSeat(seatId)) return '常坐';
   return '空闲';
 }
 
@@ -176,6 +187,7 @@ function getSeatTooltip(seatId) {
   if (isMyBooking(seatId)) return '该座位您已预约';
   if (!getSeatAvailability(seatId).available) return '该座位已被他人预约';
   if (selectedSeat.value === seatId) return '点击取消选择';
+  if (isFrequentSeat(seatId)) return '您的常坐座位，点击选择';
   return '点击选择该座位';
 }
 
@@ -218,6 +230,16 @@ function getSelectedSeatZone() {
   return zone ? zone.name : '';
 }
 
+async function loadFrequentSeats() {
+  try {
+    const res = await bookingsApi.frequentSeats();
+    if (res.success) {
+      frequentSeatIds.value = new Set(res.data.map(item => item.seatId));
+    }
+  } catch (e) {
+  }
+}
+
 async function loadAvailability() {
   if (!selectedDate.value) return;
   try {
@@ -249,6 +271,7 @@ async function submitBooking() {
       success.value = '预约成功！';
       selectedSeat.value = null;
       await loadAvailability();
+      await loadFrequentSeats();
     } else {
       error.value = res.message || '预约失败';
     }
@@ -260,5 +283,7 @@ async function submitBooking() {
   }
 }
 
-onMounted(loadAvailability);
+onMounted(async () => {
+  await Promise.all([loadAvailability(), loadFrequentSeats()]);
+});
 </script>

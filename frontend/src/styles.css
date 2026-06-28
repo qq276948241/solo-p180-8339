@@ -264,6 +264,16 @@ body {
   border-color: #c2e7b0;
 }
 
+.seat-frequent {
+  background: #fff7e6;
+  color: #d48806;
+  border-color: #ffd591;
+}
+
+.seat-frequent:hover {
+  background: #ffe7ba;
+}
+
 .seat-legend {
   display: flex;
   gap: 20px;
